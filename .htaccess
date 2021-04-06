@@ -1,0 +1,32 @@
+#
+#<IfModule mod_rewrite.c>
+#    RewriteEngine On
+#
+#    # Send would-be 404 requests to Craft
+#    RewriteCond %{REQUEST_FILENAME} !-f
+#    RewriteCond %{REQUEST_FILENAME} !-d
+#    RewriteCond %{REQUEST_URI} !^/(favicon\.ico|apple-touch-icon.*\.png)$ [NC]
+#    RewriteRule ^(.*) http://www.%{HTTP_HOST}
+#
+#     RewriteCond $1 !^(index\.php|images|robots\.txt|includes|css|js)
+#    #RewriteRule ^(.*)$ /index.php/$1 [L]
+#    
+#    RewriteRule (.+) index.php? [QSA,L]
+#
+#
+##RewriteRule ^index/([0-9][0-9])/$ index.php?controller=$1&action=$2/ 
+##RewriteRule ^index/([0-9][0-9])$ /$1/$2/ [C]
+#</IfModule>
+
+
+#RewriteRule ^(.*)/(.*).html /index.php?controller=$1&action=$2
+#RewriteRule ^index/([0-9][0-9])/$ index.php?controller=$1&action=$2/ 
+
+
+RewriteCond %{QUERY_STRING} ^(css=.*)$ [NC]
+RewriteRule ^(.*)$ /index.php?/%1 [L]
+RewriteCond $1 !^(images|admin|themes|robots\.txt|index\.php) [NC]
+RewriteCond %{QUERY_STRING} !^(ACT=.*)$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php?/$1 [L]
